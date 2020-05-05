@@ -11,6 +11,7 @@ class ProdutoController extends Controller
     public function lista(){
         $produtos = DB::select('select * from produtos');
        
-        return  view('listagem')->with('produtos',$produtos);//enviando a variavel produtos para a view
+       // return  view('listagem')->with('produtos',$produtos);//enviando a variavel produtos para a view
+        return view('listagem')->withProdutos($produtos);//utilizando metodo "magico" para passar as informaçãoes 
     }
 }
