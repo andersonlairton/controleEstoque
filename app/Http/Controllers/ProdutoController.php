@@ -9,18 +9,8 @@ class ProdutoController extends Controller
 {
     //controller criado com o artisan
     public function lista(){
-        
-        $html= '<h1>Listagem de produtos com laravel</h1>';
-        $html.='<ul>';
-
         $produtos = DB::select('select * from produtos');
-
-        foreach($produtos as $p){
-            $html.='<li> Nome:'.$p->nome.',
-            Descricao:'.$p->descricao.'</li>';
-        }
-        $html.='</ul>';
-
-        return $html; 
+       
+        return  view('listagem')->with('produtos',$produtos);//enviando a variavel produtos para a view
     }
 }
