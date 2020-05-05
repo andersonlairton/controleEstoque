@@ -17,7 +17,7 @@
                     <td><?= $p->descricao ?></td>
                     <td><?= $p->quantidade ?></td>
                     <td>
-                        <a href="produtos/detalhes?id=<?=$p->id?>"><span class="glyphicon glyphicon-search"></span>ver</a>
+                        <a href="produtos/detalhes/<?=$p->id?>"><span class="glyphicon glyphicon-search"></span>ver</a>
                     </td>
                 </tr>
             <?php endforeach ?>

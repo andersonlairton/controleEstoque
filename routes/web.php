@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/produtos','ProdutoController@lista');//nomedocontroler@metodo
-Route::get('/produtos/detalhes','ProdutoController@mostra');
+Route::get('/produtos/detalhes/{id}','ProdutoController@mostra')->where('id','[0-9]+');//especificando que o id sempre sera numero
