@@ -13,7 +13,8 @@ class ProdutoController extends Controller
         $produtos = DB::select('select * from produtos');
 
         // return  view('listagem')->with('produtos',$produtos);//enviando a variavel produtos para a view
-        return view('listagem')->withProdutos($produtos); //utilizando metodo "magico" para passar as informaçãoes 
+        return view('produtos.listagem')->withProdutos($produtos); //utilizando metodo "magico" para passar as informaçãoes 
+       // return "chegou no controller";
     }
     public function mostra($id)
     {
@@ -29,7 +30,7 @@ class ProdutoController extends Controller
         if (empty($resposta)) {
             return "produto não encontrado";
         } else {
-            return view('detalhes')->withP($resposta);
+            return view('produtos.detalhes')->withP($resposta);
         }
     }
 }
