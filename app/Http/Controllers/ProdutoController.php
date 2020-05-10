@@ -14,11 +14,11 @@ class ProdutoController extends Controller
 
         // return  view('listagem')->with('produtos',$produtos);//enviando a variavel produtos para a view
         return view('produtos.listagem')->withProdutos($produtos); //utilizando metodo "magico" para passar as informaçãoes 
-       // return "chegou no controller";
+        // return "chegou no controller";
     }
     public function mostra($id)
     {
-       // var_dump($id);
+        // var_dump($id);
         //$id = $id->all();
         //var_dump($id);
         // $id = Request::input('id');//pegando o id do elemento enviado no request,na versão 5 é desta forma
@@ -32,5 +32,28 @@ class ProdutoController extends Controller
         } else {
             return view('produtos.detalhes')->withP($resposta);
         }
+    }
+    public function novo()
+    {
+        return view('produtos.formulario');
+    }
+    public function adiciona(Request $p){
+        //pegando dados do formulario
+        $nome =$p->input('nome');
+        $descricao = $p->input('descricao');
+        $valor=$p->input('valor');
+        $quantidade=$p->input('quantidade');
+        //inserindo no banco de dados
+      //  $valor =number_format($valor, 2, ',', '.');
+      
+       // $valor= floatval($valor);
+       // var_dump($valor);
+     // die;
+        DB::insert('insert into produtos
+        (nome,quantidade,valor,descricao) values(?,?,?,?)',
+        [$nome,$quantidade,$valor,$descricao]);
+        //retornando
+       
+        return view('produtos.adicionado')->with('nome',$nome);
     }
 }
