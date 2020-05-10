@@ -53,7 +53,6 @@ class ProdutoController extends Controller
         (nome,quantidade,valor,descricao) values(?,?,?,?)',
         [$nome,$quantidade,$valor,$descricao]);
         //retornando
-       
         return view('produtos.adicionado')->with('nome',$nome);
     }
 }

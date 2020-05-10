@@ -2,7 +2,9 @@
 @section('conteudo')
 
 <h1>Novo Produto</h1>
-<form action="{{route('produtos.adiciona')}}"><!-- aqui estou utilizando a rota nomeada-->
+<form action="{{route('produtos.adiciona')}}" method="POST"><!-- aqui estou utilizando a rota nomeada-->
+ <!--  <input  value="{{csrf_token()}}"/>inserindo token na requisição-->
+    @csrf <!-- ao que parece,a versao 6 em diante,so aceita o tokem assim -->
     <div class="form-group">
         <label>Nome</label>
         <input class="form-control" name="nome" />
