@@ -16,7 +16,8 @@
                     </a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="/produtos">Listagem</a></li>
+                    <li><a href="{{route('produtos.listagem')}}">Listagem</a></li>
+                    <li><a href="{{route('produtos.novo')}}">Novo produto</a></li>
                 </ul>
             </div>
         </nav>
