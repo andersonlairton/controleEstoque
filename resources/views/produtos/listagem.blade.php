@@ -23,5 +23,14 @@
 </table>
 </div>
 @endif
-<span class="label label-danger pull-right">Um ou menos itens no estoque</span>
+<h4>
+    <span class="label label-danger pull-right">Um ou menos itens no estoque</span>
+</h4>
+@if(old('nome'))
+<div class="alert alert-sucess">
+    <strong>
+        O produto {{old('nome')}} foi adicionado com sucesso!
+    </strong>
+</div>
+@endif
 @stop

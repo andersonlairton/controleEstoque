@@ -53,6 +53,7 @@ class ProdutoController extends Controller
         (nome,quantidade,valor,descricao) values(?,?,?,?)',
         [$nome,$quantidade,$valor,$descricao]);
         //retornando
-        return view('produtos.adicionado')->with('nome',$nome);
+        //return redirect('/produtos')->withInput($p->only('nome'));//redireciona para a pagina de listagem,e recuperando apenas o input "nome"
+        return redirect()->action('ProdutoController@lista')->withInput($p->only('nome'));//redirecionano com ação
     }
 }
