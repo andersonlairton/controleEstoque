@@ -18,6 +18,16 @@
         <td>
             <a href="produtos/detalhes/{{$p->id}}"><span class="glyphicon glyphicon-search"></span>ver</a>
         </td>
+        <td>
+            <a href="{{action('ProdutoController@remove',$p->id)}}">
+                <span class="glyphicon glyphicon-trash">Excluir</span>
+            </a>
+        </td>
+        <td>
+            <a href="{{action('ProdutoController@editar',$p->id)}}">
+            <span class="glyphicon glyphicon-pencil">Editar</span>
+            </a>
+        </td>
     </tr>
     @endforeach
 </table>

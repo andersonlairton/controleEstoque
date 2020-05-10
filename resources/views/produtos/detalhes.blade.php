@@ -1,15 +1,15 @@
 @extends('layout.principal')
 @section('conteudo')
-<h1>Detalhes do Produto  {{$p[0]->nome }}</h1>
+<h1>Detalhes do Produto  {{$p->nome }}</h1>
 <ul>
     <li>
-        <b>Valor:</b>R$ {{ $p[0]->valor}}
+        <b>Valor:</b>R$ {{ $p->valor}}
     </li>
     <li>
-        <b>Descrição:</b>{{ $p[0]->descricao }}
+        <b>Descrição:</b>{{ $p->descricao }}
     </li>
     <li>
-        <b>Quantidade em estoque: </b>{{ $p[0]->quantidade }}
+        <b>Quantidade em estoque: </b>{{ $p->quantidade }}
     </li>
 </ul>
 @stop

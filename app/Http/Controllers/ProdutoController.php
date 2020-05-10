@@ -2,6 +2,7 @@
 
 namespace estoque\Http\Controllers;
 
+use estoque\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; //importando a classe db,que auxilia nos comandos do sql
 
@@ -10,23 +11,22 @@ class ProdutoController extends Controller
     //controller criado com o artisan
     public function lista()
     {
-        $produtos = DB::select('select * from produtos');
-
+        //$produtos = DB::select('select * from produtos');
+        //usando o metodo eloquement
+        $produtos = Produto::all();
         // return  view('listagem')->with('produtos',$produtos);//enviando a variavel produtos para a view
         return view('produtos.listagem')->withProdutos($produtos); //utilizando metodo "magico" para passar as informaçãoes 
         // return "chegou no controller";
     }
     public function mostra($id)
     {
-        // var_dump($id);
-        //$id = $id->all();
-        //var_dump($id);
+        //$id = $id->all();   
         // $id = Request::input('id');//pegando o id do elemento enviado no request,na versão 5 é desta forma
-        // var_dump($id->id)peguei o id que veio da variavel request
-        //die;
-        $resposta = DB::select('select * from produtos where id=?', [$id]);
-        // var_dump($resposta);
-        // die;
+        //  $resposta = DB::select('select * from produtos where id=?', [$id]);
+        //fazendo a busca com o eloquent
+        $resposta = Produto::find($id); //pode ser buscado assim
+        //$resposta = Produto::where('id',$id)->first();//pode ser buscado desta forma tambem
+
         if (empty($resposta)) {
             return "produto não encontrado";
         } else {
@@ -37,23 +37,60 @@ class ProdutoController extends Controller
     {
         return view('produtos.formulario');
     }
-    public function adiciona(Request $p){
+    public function adiciona(Request $p)
+    {
+        //adicionando via eloquent
+        /*$prod = new Produto();//basicamente,estou chamando a classe(ou model no mvc) para fazer o insert
+        $prod->nome = $p->input('nome');//setando as variaveis
+        $prod->valor = $p->input('valor');
+        $prod->quantidade = $p->input('quantidade');
+        $prod->descricao = $p->input('descricao');
+        $prod->save();//salvando
+        */
+        /**ainda mais enxuto */
+        Produto::create($p->all()); //com isso ele ja faz o metodo save 
+
         //pegando dados do formulario
-        $nome =$p->input('nome');
+        /*$nome =$p->input('nome');
         $descricao = $p->input('descricao');
         $valor=$p->input('valor');
         $quantidade=$p->input('quantidade');
+        */
+
         //inserindo no banco de dados
-      //  $valor =number_format($valor, 2, ',', '.');
-      
-       // $valor= floatval($valor);
-       // var_dump($valor);
-     // die;
-        DB::insert('insert into produtos
+        /*DB::insert('insert into produtos
         (nome,quantidade,valor,descricao) values(?,?,?,?)',
         [$nome,$quantidade,$valor,$descricao]);
+        */
         //retornando
         //return redirect('/produtos')->withInput($p->only('nome'));//redireciona para a pagina de listagem,e recuperando apenas o input "nome"
-        return redirect()->action('ProdutoController@lista')->withInput($p->only('nome'));//redirecionano com ação
+        return redirect()->action('ProdutoController@lista')->withInput($p->only('nome')); //redirecionano com ação
+    }
+    public function remove($id)
+    {
+        $prod = Produto::find($id);
+        $prod->delete();
+        return redirect()->action('ProdutoController@lista');
+    }
+    public function editar($id)
+    {
+
+        $resposta = Produto::find($id);
+
+        if (empty($resposta)) {
+            return "produto não encontrado";
+        } else {
+            return view('produtos.formulario')->withP($resposta);
+        }
+    }
+    public function update(Request $id)
+    {
+        $prod = Produto::find($id->id);
+        if (empty($prod)) {
+            return "produto não encontrado";
+        } else {
+            $prod->update($id->all());
+            return redirect()->action('ProdutoController@lista');
+        }
     }
 }
