@@ -2,6 +2,7 @@
 
 namespace estoque\Http\Controllers;
 
+use estoque\Http\Requests\ProdutosRequest;
 use estoque\Produto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB; //importando a classe db,que auxilia nos comandos do sql
@@ -37,7 +38,7 @@ class ProdutoController extends Controller
     {
         return view('produtos.formulario');
     }
-    public function adiciona(Request $p)
+    public function adiciona(ProdutosRequest $p)//chamando a classe produtos request para fazer a validação
     {
         //adicionando via eloquent
         /*$prod = new Produto();//basicamente,estou chamando a classe(ou model no mvc) para fazer o insert
@@ -48,6 +49,7 @@ class ProdutoController extends Controller
         $prod->save();//salvando
         */
         /**ainda mais enxuto */
+        /**existe um metodo chamado validate que valida um campo especifico,caso seja necessario */
         Produto::create($p->all()); //com isso ele ja faz o metodo save 
 
         //pegando dados do formulario
@@ -64,7 +66,7 @@ class ProdutoController extends Controller
         */
         //retornando
         //return redirect('/produtos')->withInput($p->only('nome'));//redireciona para a pagina de listagem,e recuperando apenas o input "nome"
-        return redirect()->action('ProdutoController@lista')->withInput($p->only('nome')); //redirecionano com ação
+        return redirect()->action('ProdutoController@lista')->withInput(Request::only('nome')); //redirecionano com ação
     }
     public function remove($id)
     {
@@ -83,7 +85,7 @@ class ProdutoController extends Controller
             return view('produtos.formulario')->withP($resposta);
         }
     }
-    public function update(Request $id)
+    public function update(ProdutosRequest $id)
     {
         $prod = Produto::find($id->id);
         if (empty($prod)) {
